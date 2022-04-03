@@ -23,4 +23,13 @@ function M.search_selected_providers(opts)
   end
 end
 
+function M.url_opener_module(opts)
+  return function(prompt_bufnr)
+    local selection = action_state.get_selected_entry()
+    actions.close(prompt_bufnr)
+    local url = M_api.get_docs_url_module(selection.full_name, selection.provider_name)
+    os.execute(string.format('%s "%s"', opts.url_open_command, url))
+  end
+end
+
 return M
